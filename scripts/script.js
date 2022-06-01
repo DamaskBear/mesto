@@ -1,30 +1,3 @@
-const initialCards = [
-    {
-      name: 'Архыз',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-    },
-    {
-      name: 'Челябинская область',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-    },
-    {
-      name: 'Иваново',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-    },
-    {
-      name: 'Камчатка',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-    },
-    {
-      name: 'Холмогорский район',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-    },
-    {
-      name: 'Байкал',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-    }
-  ];
-
 // edits
 const editButton = document.querySelector('.profile__edit-button');
 const editPopup = document.querySelector('.popup__type_edit');
@@ -34,23 +7,29 @@ const profileName = document.querySelector('.profile__name');
 const userName = popupEdit.querySelector('.popup__input_name');
 const userJob = popupEdit.querySelector('.popup__input_job');
 const profileAbout = document.querySelector('.profile__about');
-const closeEditPopup = popupEdit.querySelector('.popup__close-button');
+const popupCloseEdit = popupEdit.querySelector('.popup__close-button');
+const formElement = document.querySelector('.popup__form_type-edit');
 
 //add cards
 const cardsList = document.querySelector('.elements__card'); 
 const popupAddCard = document.querySelector('.popup_type_add-form');
 const addButton = document.querySelector('.profile__add-button');
-const addCardForm = popupAddCard.querySelector('.popup__form_type_add-card');
+const cardFormAdd = popupAddCard.querySelector('.popup__form_type_add-card');
 const inputPlaceName = popupAddCard.querySelector('.popup__input_place-name');
 const inputPlaceLink = popupAddCard.querySelector('.popup__input_place-link');
-const closeAddPopup = popupAddCard.querySelector('.popup__close-button');
+const popupCloseAdd = popupAddCard.querySelector('.popup__close-button');
 
 //fullscreen
 const popupFullscreen = document.querySelector('.popup_type_fullscreen-photo');
-const closeFullscreenPopup = popupFullscreen.querySelector('.popup__close-button');
+const popupCloseFullscreen = popupFullscreen.querySelector('.popup__close-button');
 const fullscreenPhoto = popupFullscreen.querySelector('.popup__fullscreen-photo');
 const fullscreenCaption = popupFullscreen.querySelector('.popup__fullscreen-caption');
 
+//profile
+const nameInput = formElement.querySelector('.popup__input_name');
+const jobInput = formElement.querySelector('.popup__input_job');
+const name = document.querySelector('.profile__name');
+const job = document.querySelector('.profile__about');
 
 // open popup
 function openPopup(popup) {
@@ -60,45 +39,24 @@ function openPopup(popup) {
 function closePopup(popup) {
     popup.classList.remove('popup_opened');
 }
-
-// to close popup windows
-closeEditPopup.addEventListener('click', () => {
-    closePopup(popupEdit);
-});
-
-closeAddPopup.addEventListener('click', () => {
-    closePopup(popupAddCard);
-});
-
-closeFullscreenPopup.addEventListener('click', () => {
-    closePopup(popupFullscreen);
-});
 //
-function formEditPopupHandler() {
+function editFormPopupHandler() {
     userName.value = profileName.textContent;
     userJob.value = profileAbout.textContent;
     openPopup(popupEdit);
 }
 
-editButton.addEventListener('click', formEditPopupHandler);
-
-const formElement = document.querySelector('.popup__form_type-edit');
-
 // old code frm 4th sprint
-function formSubmitHandler (evt) {
+function submitFormHandler (evt) {
     evt.preventDefault();
-    const nameInput = formElement.querySelector('.popup__input_name');
-    const jobInput = formElement.querySelector('.popup__input_job');
+    
     const nameInputValue = nameInput.value;
     const jobInputValue = jobInput.value;
-    const name = document.querySelector('.profile__name');
-    const job = document.querySelector('.profile__about');
-    name.textContent = nameInputValue; 
-    job.textContent = jobInputValue; 
+    
+    name.textContent = nameInputValue;
+    job.textContent = jobInputValue;
     closePopup(popupEdit);
 } 
-
-formElement.addEventListener('submit', formSubmitHandler); 
 
 //like
 function likeCardHandler(evt) {
@@ -114,6 +72,7 @@ function deleteCardHandler(evt) {
 function showFullscreenHandler(cardData) {
     fullscreenPhoto.src = cardData.link;
     fullscreenCaption.textContent = cardData.name;
+    fullscreenPhoto.alt = `Фото: ${cardData.name}`
 
     openPopup(popupFullscreen);
 }
@@ -130,6 +89,7 @@ function createCard(cardData) {
 
     cardPhoto.src = cardData.link;
     cardPhotoName.textContent = cardData.name;
+    cardPhoto.alt = `Фото: ${cardData.name}`;
 
     cardPhoto.addEventListener('click', () => {
         showFullscreenHandler(cardData);
@@ -151,18 +111,37 @@ function createUserCardHandler(evt) {
     newCard.link = inputPlaceLink.value;
 
     renderCard(newCard, cardsList);
-    addCardForm.reset();
+    cardFormAdd.reset();
 
     closePopup(popupAddCard);
 }
-
-addButton.addEventListener('click', () => openPopup(popupAddCard));
-
-addCardForm.addEventListener('submit', createUserCardHandler);
 
 function renderCard(cardData, element) {
     const newCard = createCard(cardData);
     element.prepend(newCard);
 }
+
+// slu6ateli
+formElement.addEventListener('submit', submitFormHandler);
+
+editButton.addEventListener('click', editFormPopupHandler);
+
+addButton.addEventListener('click', () => openPopup(popupAddCard));
+
+cardFormAdd.addEventListener('submit', createUserCardHandler);
+
+// to close popup windows
+popupCloseEdit.addEventListener('click', () => {
+    closePopup(popupEdit);
+});
+
+popupCloseAdd.addEventListener('click', () => {
+    closePopup(popupAddCard);
+});
+
+popupCloseFullscreen.addEventListener('click', () => {
+    closePopup(popupFullscreen);
+});
+
 // cards frm js
 initialCards.forEach(item => renderCard(item, cardsList));
