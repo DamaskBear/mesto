@@ -31,9 +31,27 @@ const jobInput = formElement.querySelector('.popup__input_job');
 const name = document.querySelector('.profile__name');
 const job = document.querySelector('.profile__about');
 
+//close by click overlay
+function closePopupOverlay(evt) {
+    const openedPopup = evt.target;
+    if (openedPopup.classList.contains('popup_opened')) {
+        closePopup(openedPopup);
+    }  
+}
+
+// close by ESC
+function closePopupEsc (evt) {
+    if(evt.keyCode === 27) {
+        const openedPopup = document.querySelector('.popup_opened');
+        closePopup(openedPopup);
+    }
+}
+
 // open popup
 function openPopup(popup) {
     popup.classList.add('popup_opened');
+    document.addEventListener('keydown', closePopupEsc);
+    document.addEventListener('mousedown',closePopupOverlay);
 }
 //close popup
 function closePopup(popup) {

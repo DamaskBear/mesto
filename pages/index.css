@@ -46,3 +46,6 @@
 @import url(../blocks/popup/__fullscreen-photo/popup__fullscreen-photo.css);
 @import url(../blocks/popup/__fullscreen-caption/popup__fullscreen-caption.css);
 @import url(../blocks/popup/__photo-container/popup__photo-container.css);
+
+@import url(../blocks/popup/__input-error/popup__input-error.css);
+@import url(../blocks/popup/_type/popup_type_disabled.css);
