@@ -49,3 +49,4 @@
 
 @import url(../blocks/popup/__input-error/popup__input-error.css);
 @import url(../blocks/popup/_type/popup_type_disabled.css);
+@import url(../blocks/popup/_error/popup_error_visible.css);

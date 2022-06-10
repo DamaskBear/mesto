@@ -1,9 +1,9 @@
 .popup_type_disabled {
-    border: 1px solid #000000;
-    border-radius: 2px;
-    opacity: 0.2;
-    color: #0000;
-    background-color: inherit;
+    background-color: transparent;
+    color: #000;
+    border: 1px solid #000;
+    opacity: .2;
     pointer-events: none;
     user-select: none;
+    border-radius: 2px;
 }
