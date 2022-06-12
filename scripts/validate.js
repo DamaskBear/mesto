@@ -7,7 +7,6 @@ const validateConfig = {
     errorClass: 'popup_error_visible'
   }; 
 
-
   //function which showes errors
 function showInputError(form, inputElement, validateConfig) {
     inputElement.classList.add(validateConfig.inputErrorClass);
@@ -32,7 +31,7 @@ function hideInputError(form, inputElement, validateConfig) {
     toggleButtonState(inputElement, button, validateConfig);
 }
 
-// is it Valid?
+//to check input validation 
 function checkInputValidity(form, inputElement, validateConfig) {
     if (!inputElement.validity.valid) {
         showInputError(form, inputElement, validateConfig);
@@ -52,10 +51,11 @@ function setEventListener(form, validateConfig) {
 }
 
 function enableValidation(validateConfig) {
-    const formList = document.querySelectorAll(validateConfig.formSelector);
-    formList.forEach(form => setEventListener(form, validateConfig) );
+    const formInputList = document.querySelectorAll(validateConfig.formSelector);
+    formInputList.forEach(form => setEventListener(form, validateConfig) );
 }
-
+ 
+//toggle button
 function toggleButtonState(input, button, validateConfig) {
     if ( !input.validity.valid ) {
         button.classList.add(validateConfig.inactiveButtonClass);
@@ -66,6 +66,7 @@ function toggleButtonState(input, button, validateConfig) {
     }
 }
 
+// to remove errors and left text in form
 function removeInputErrors(popup, validateConfig) {
     const inputsList = Array.from(popup.querySelectorAll(validateConfig.inputSelector));
     const button = popup.querySelector(validateConfig.submitButtonSelector);
@@ -76,14 +77,4 @@ function removeInputErrors(popup, validateConfig) {
     });
 }
 
-// function makeButtonInvalid(buttonElement,validateConfig) {
-//     buttonElement.classList.add(validateConfig.inactiveButtonClass);
-//     buttonElement.disabled = true
-// }
-
 enableValidation(validateConfig);
-
-
-
-
-
