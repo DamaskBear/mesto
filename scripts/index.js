@@ -151,10 +151,13 @@ cardFormAdd.addEventListener('submit', createUserCardHandler);
 // to close popup windows
 popupCloseEdit.addEventListener('click', () => {
     closePopup(popupEdit);
+    removeInputErrors(popupEdit, validateConfig);
 });
 
 popupCloseAdd.addEventListener('click', () => {
+    cardFormAdd.reset();
     closePopup(popupAddCard);
+    removeInputErrors(popupAddCard, validateConfig);
 });
 
 popupCloseFullscreen.addEventListener('click', () => {
