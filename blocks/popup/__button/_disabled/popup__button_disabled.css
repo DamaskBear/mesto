@@ -1,9 +1,8 @@
-.popup_type_disabled {
+.popup__button_disabled {
     background-color: transparent;
     color: #000;
     border: 1px solid #000;
     opacity: .2;
     pointer-events: none;
-    user-select: none;
     border-radius: 2px;
 }
