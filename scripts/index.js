@@ -11,6 +11,7 @@ const popupCloseEdit = popupEdit.querySelector('.popup__close-button');
 const formElement = document.querySelector('.popup__form_type-edit');
 
 //add cards
+const cardTemplate = document.querySelector(".card-template").content;
 const cardsList = document.querySelector('.elements__card'); 
 const popupAddCard = document.querySelector('.popup_type_add-form');
 const addButton = document.querySelector('.profile__add-button');
@@ -41,7 +42,7 @@ function closePopupOverlay(evt) {
 
 // close by ESC
 function closePopupEsc (evt) {
-    if(evt.keyCode === 27) {
+    if(evt.key === 'Escape') {
         const openedPopup = document.querySelector('.popup_opened');
         closePopup(openedPopup);
     }
@@ -52,11 +53,17 @@ function openPopup(popup) {
     popup.classList.add('popup_opened');
     document.addEventListener('keydown', closePopupEsc);
     document.addEventListener('mousedown',closePopupOverlay);
+
+    resetDisabledButton(popup, validateConfig);
 }
+
 //close popup
 function closePopup(popup) {
     popup.classList.remove('popup_opened');
+    document.removeEventListener('keydown', closePopupEsc);
+    document.removeEventListener('mousedown',closePopupOverlay);
 }
+
 //
 function editFormPopupHandler() {
     userName.value = profileName.textContent;
@@ -98,7 +105,6 @@ function showFullscreenHandler(cardData) {
 // to add cards frm JS
 function createCard(cardData) {
 
-    const cardTemplate = document.querySelector(".card-template").content;
     const cardItem = cardTemplate.querySelector('.elements__item').cloneNode(true);
     const cardPhoto = cardItem.querySelector('.elements__photo');
     const cardPhotoName = cardItem.querySelector('.elements__name');

@@ -77,4 +77,16 @@ function removeInputErrors(popup, validateConfig) {
     });
 }
 
+// Disable a Button
+function toDisableButton(buttonElement, popupValidation) {
+    buttonElement.classList.add(popupValidation.inactiveButtonClass);
+    buttonElement.disabled = true;
+}
+
+// refresh disabled button after re-opening adding-popup
+function resetDisabledButton(popup, validateConfig) {
+    const buttonElement = popup.querySelector(validateConfig.submitButtonSelector);
+    toDisableButton(buttonElement, validateConfig);
+}
+
 enableValidation(validateConfig);
