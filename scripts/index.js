@@ -1,6 +1,6 @@
 // edits
 const editButton = document.querySelector('.profile__edit-button');
-const editPopup = document.querySelector('.popup__type_edit');
+// const editPopup = document.querySelector('.popup__type_edit');
 const popupEdit = document.querySelector('.popup_type_edit-form');
 const editForm = popupEdit.querySelector('.popup__form_type_edit');
 const profileName = document.querySelector('.profile__name');
@@ -53,8 +53,6 @@ function openPopup(popup) {
     popup.classList.add('popup_opened');
     document.addEventListener('keydown', closePopupEsc);
     document.addEventListener('mousedown',closePopupOverlay);
-
-    resetDisabledButton(popup, validateConfig);
 }
 
 //close popup
@@ -69,6 +67,7 @@ function editFormPopupHandler() {
     userName.value = profileName.textContent;
     userJob.value = profileAbout.textContent;
     openPopup(popupEdit);
+    resetDisabledButton(popupEdit, validateConfig);
 }
 
 // old code frm 4th sprint
@@ -136,8 +135,8 @@ function createUserCardHandler(evt) {
 
     renderCard(newCard, cardsList);
     cardFormAdd.reset();
-
     closePopup(popupAddCard);
+    resetDisabledButton(popupAddCard, validateConfig);
 }
 
 function renderCard(cardData, element) {
