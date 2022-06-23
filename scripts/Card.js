@@ -24,3 +24,29 @@ const initialCards = [
       link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
     }
   ];
+
+  // class Card {
+  //   constructor() {
+
+  //   }
+
+  //   _getTemplate() {
+
+  //   }
+
+  //   generateCard() {
+
+  //   }
+
+  //   _handleOpenPopup() {
+
+  //   }
+
+  //   _handleClosePopup() {
+
+  //   }
+
+  //   _setEventListeners() {
+
+  //   }
+  // }
