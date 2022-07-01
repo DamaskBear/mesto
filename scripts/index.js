@@ -13,7 +13,7 @@ const popupCloseEdit = popupEdit.querySelector('.popup__close-button');
 const formElement = document.querySelector('.popup__form_type-edit');
 
 //add cards
-const cardTemplate = document.querySelector(".card-template");
+// const cardTemplate = document.querySelector(".card-template");
 const cardsList = document.querySelector('.elements__card'); 
 const popupAddCard = document.querySelector('.popup_type_add-form');
 const addButton = document.querySelector('.profile__add-button');
@@ -105,13 +105,15 @@ function showFullscreenHandler(cardData) {
 
 // to add cards frm JS
 function createCard(cardData) {
-    return (new Card(cardData, ".card-template")).generateCard();
+    const card = new Card(cardData, '.card-template');
+    const newCard = card.generateCard();
+
+  return newCard;
    
 }
 //рендер 
-function renderCard(cardData, element) {
-    const newCard = createCard(cardData);
-    element.prepend(newCard);
+function renderCard(cardItem, element) {
+    element.prepend(cardItem);
 }
 
 
@@ -124,8 +126,9 @@ function createUserCardHandler(evt) {
     newCard.name = inputPlaceName.value;
     newCard.link = inputPlaceLink.value;
 
-    renderCard(newCard, cardsList);
-    cardFormAdd.reset();
+    const card = createCard(newCard);
+    renderCard(card, cardsList);
+    // cardFormAdd.reset();
     closePopup(popupAddCard);
     resetDisabledButton(popupAddCard, validateConfig);
 }
@@ -156,12 +159,10 @@ popupCloseFullscreen.addEventListener('click', () => {
 });
 
 // cards frm js
+/*Создание экзмепляров класса Card для исходных карточек*/
 initialCards.forEach(item => {
     const card = createCard(item);
-    renderCard(card, cardsList)
-});
-
-
-
+    renderCard(card, cardsList);
+  });
 
 export {showFullscreenHandler};

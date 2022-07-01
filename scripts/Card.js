@@ -1,5 +1,4 @@
-  import {showFullscreenHandler} from "./index.js";
-  // нужно определить, что засунуть в констурктор и его тело. 
+  import {showFullscreenHandler} from "./index.js"; 
   // 
   export class Card {
     constructor(data, cardSelector) {
@@ -38,15 +37,21 @@
 
     generateCard() {
       this._element = this._getTemplate();
-      
+      this._setEventListeners();
+
       // Добавим данные
       const cardElementImage = this._element.querySelector('.elements__photo');
       const cardElementName = this._element.querySelector('.elements__name');
-      cardElementImage.setAttribute("src", this._link);
-      cardElementImage.setAttribute("alt", this._name);
-      cardElementName.textContent = this._name;
 
-      this._setEventListeners();
+      cardElementName.textContent = this._name;
+      cardElementImage.src = this._link;
+      cardElementImage.alt = `Пользовательское фото места ${this._title}`;
+
+      // cardElementImage.setAttribute("src", this._link);
+      // cardElementImage.setAttribute("alt", this._name);
+      // cardElementName.textContent = this._name;
+
+      
 
       return this._element;
     }
