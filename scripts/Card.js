@@ -1,52 +1,52 @@
-const initialCards = [
-    {
-      name: 'Архыз',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-    },
-    {
-      name: 'Челябинская область',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-    },
-    {
-      name: 'Иваново',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-    },
-    {
-      name: 'Камчатка',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-    },
-    {
-      name: 'Холмогорский район',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-    },
-    {
-      name: 'Байкал',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+export class Card {
+    constructor(data, cardSelector) {
+      this._name = data.name;
+      this._link = data.link;
+      this._cardSelector = cardSelector;
     }
-  ];
 
-  // class Card {
-  //   constructor() {
+    _getTemplate() {
+      const cardElement = document.querySelector(this._cardSelector)
+      .content
+      .querySelector('.elements__item')
+      .cloneNode(true);
+    return cardElement;
+    }
 
-  //   }
+    //like
+    _likeCardHandler(evt) {
+      evt.target.classList.toggle('elements__like-button_active');
+    }
 
-  //   _getTemplate() {
+//delete button for cards
+    _deleteCardHandler() {
+      this._element.remove();
+    }
 
-  //   }
+    _setEventListeners() {
+      const deleteBtn = this._element.querySelector('.elements__pic-bin');
+      const likeBtn = this._element.querySelector(".elements__like-button");
 
-  //   generateCard() {
+      likeBtn.addEventListener('click', (evt) => {
+        this._likeCardHandler(evt);
+      });
+  
+      deleteBtn.addEventListener('click', () => {
+        this._deleteCardHandler();
+      });
+    }
 
-  //   }
+    generateCard() {
+        this._element = this._getTemplate();
+        this._setEventListeners();
 
-  //   _handleOpenPopup() {
-
-  //   }
-
-  //   _handleClosePopup() {
-
-  //   }
-
-  //   _setEventListeners() {
-
-  //   }
-  // }
+        const cardTitle = this._element.querySelector('.elements__name');
+        const cardImg = this._element.querySelector('.elements__photo');
+    
+        cardTitle.textContent = this._name;
+        cardImg.src = this._name;
+        cardImg.alt = `Пользовательское фото места ${this._name}`;
+    
+        return this._element;
+    }
+  }

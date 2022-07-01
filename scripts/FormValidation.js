@@ -7,6 +7,44 @@ const validateConfig = {
     errorClass: 'popup_error_visible'
   }; 
 
+//   class FormValidator {
+//     constructor(dataConfig, formElement) {
+//         this._form = formElement;
+//         this._inputSelector = dataConfig.inputSelector;
+//         this._inputList = Array.from(this._form.querySelectorAll(this._inputSelector));
+    
+//         this._submitButtonSelector = dataConfig.submitButtonSelector;
+//         this._buttonSubmit = this._form.querySelector(this._submitButtonSelector);
+//         this._inactiveButtonClass = dataConfig.inactiveButtonClass;
+    
+//         this._inputErrorClass = dataConfig.inputErrorClass;
+//         this._errorClass = dataConfig.errorClass;
+
+//     }
+
+
+//   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   //function which showes errors
 function showInputError(form, inputElement, validateConfig) {
     inputElement.classList.add(validateConfig.inputErrorClass);
