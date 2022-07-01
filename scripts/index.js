@@ -1,3 +1,5 @@
+import { Card } from "./Card.js";
+import { initialCards } from "./initialCards.js";
 // edits
 const editButton = document.querySelector('.profile__edit-button');
 // const editPopup = document.querySelector('.popup__type_edit');
@@ -11,7 +13,7 @@ const popupCloseEdit = popupEdit.querySelector('.popup__close-button');
 const formElement = document.querySelector('.popup__form_type-edit');
 
 //add cards
-const cardTemplate = document.querySelector(".card-template").content;
+const cardTemplate = document.querySelector(".card-template");
 const cardsList = document.querySelector('.elements__card'); 
 const popupAddCard = document.querySelector('.popup_type_add-form');
 const addButton = document.querySelector('.profile__add-button');
@@ -82,15 +84,15 @@ function submitFormHandler (evt) {
     closePopup(popupEdit);
 } 
 
-//like
-function likeCardHandler(evt) {
-    evt.target.classList.toggle('elements__like-button_active');
-}
+// //like
+// function likeCardHandler(evt) {
+//     evt.target.classList.toggle('elements__like-button_active');
+// }
 
-//delete button for cards
-function deleteCardHandler(evt) {
-    evt.target.closest('.elements__item').remove();
-}
+// //delete button for cards
+// function deleteCardHandler(evt) {
+//     evt.target.closest('.elements__item').remove();
+// }
 
 // fullscreen function
 function showFullscreenHandler(cardData) {
@@ -103,30 +105,19 @@ function showFullscreenHandler(cardData) {
 
 // to add cards frm JS
 function createCard(cardData) {
-
-    const cardItem = cardTemplate.querySelector('.elements__item').cloneNode(true);
-    const cardPhoto = cardItem.querySelector('.elements__photo');
-    const cardPhotoName = cardItem.querySelector('.elements__name');
-    const btnCardLike = cardItem.querySelector('.elements__like-button');
-    const btnCardDelete = cardItem.querySelector('.elements__pic-bin');
-
-    cardPhoto.src = cardData.link;
-    cardPhotoName.textContent = cardData.name;
-    cardPhoto.alt = `Фото: ${cardData.name}`;
-
-    cardPhoto.addEventListener('click', () => {
-        showFullscreenHandler(cardData);
-    });
-
-    btnCardLike.addEventListener('click', likeCardHandler);
-
-    btnCardDelete.addEventListener('click', deleteCardHandler);
-
-    return cardItem;
+    return (new Card(cardData, ".card-template")).generateCard();
+   
 }
+//рендер 
+function renderCard(cardData, element) {
+    const newCard = createCard(cardData);
+    element.prepend(newCard);
+}
+
 
 // creation of new card
 function createUserCardHandler(evt) {
+    
     evt.preventDefault();
 
     const newCard = {};
@@ -137,11 +128,6 @@ function createUserCardHandler(evt) {
     cardFormAdd.reset();
     closePopup(popupAddCard);
     resetDisabledButton(popupAddCard, validateConfig);
-}
-
-function renderCard(cardData, element) {
-    const newCard = createCard(cardData);
-    element.prepend(newCard);
 }
 
 // slu6ateli
@@ -170,4 +156,12 @@ popupCloseFullscreen.addEventListener('click', () => {
 });
 
 // cards frm js
-initialCards.forEach(item => renderCard(item, cardsList));
+initialCards.forEach(item => {
+    const card = createCard(item);
+    renderCard(card, cardsList)
+});
+
+
+
+
+export {showFullscreenHandler};
