@@ -1,52 +1,51 @@
-export class Card {
+  import {showFullscreenHandler} from "./index.js"; 
+  // 
+  export class Card {
     constructor(data, cardSelector) {
       this._name = data.name;
       this._link = data.link;
       this._cardSelector = cardSelector;
     }
 
+// take markup frm HTML-file and clone element 
     _getTemplate() {
       const cardElement = document.querySelector(this._cardSelector)
       .content
       .querySelector('.elements__item')
       .cloneNode(true);
-    return cardElement;
+
+      return cardElement;
     }
 
-    //like
-    _likeCardHandler(evt) {
-      evt.target.classList.toggle('elements__like-button_active');
-    }
-
-//delete button for cards
-    _deleteCardHandler() {
+    // delete-a-card function
+    _deleteCardHandler = () => {
       this._element.remove();
-    }
+  }
 
+    //like-function
+    _likeCardHandler(evt) {
+      evt.target.classList.toggle("elements__like-button_active");
+    };
+
+    // set listeners for delete, like, pic clicks
     _setEventListeners() {
-      const deleteBtn = this._element.querySelector('.elements__pic-bin');
-      const likeBtn = this._element.querySelector(".elements__like-button");
-
-      likeBtn.addEventListener('click', (evt) => {
-        this._likeCardHandler(evt);
-      });
-  
-      deleteBtn.addEventListener('click', () => {
-        this._deleteCardHandler();
-      });
+      this._element.querySelector(".elements__pic-bin").addEventListener("click", this._deleteCardHandler);
+      this._element.querySelector(".elements__like-button").addEventListener("click", this._likeCardHandler);
+      this._element.querySelector(".elements__photo").addEventListener("click", () => { showFullscreenHandler(this._name, this._link) });
     }
 
+    // create a card (collect all sets)
     generateCard() {
-        this._element = this._getTemplate();
-        this._setEventListeners();
+      this._element = this._getTemplate();
+      this._setEventListeners();
 
-        const cardTitle = this._element.querySelector('.elements__name');
-        const cardImg = this._element.querySelector('.elements__photo');
-    
-        cardTitle.textContent = this._name;
-        cardImg.src = this._name;
-        cardImg.alt = `Пользовательское фото места ${this._name}`;
-    
-        return this._element;
+      const cardElementImage = this._element.querySelector('.elements__photo');
+      const cardElementName = this._element.querySelector('.elements__name');
+
+      cardElementName.textContent = this._name;
+      cardElementImage.src = this._link;
+      cardElementImage.alt = `Фото ${this._name}`;
+
+      return this._element;
     }
   }
