@@ -18,33 +18,34 @@
       return cardElement;
     }
 
-    // Удаление карточки
+    // delete-a-card function
     _deleteCardHandler = () => {
       this._element.remove();
   }
 
-    //лайк
+    //like-function
     _likeCardHandler(evt) {
       evt.target.classList.toggle("elements__like-button_active");
     };
 
+    // set listeners for delete, like, pic clicks
     _setEventListeners() {
       this._element.querySelector(".elements__pic-bin").addEventListener("click", this._deleteCardHandler);
       this._element.querySelector(".elements__like-button").addEventListener("click", this._likeCardHandler);
       this._element.querySelector(".elements__photo").addEventListener("click", () => { showFullscreenHandler(this._name, this._link) });
     }
 
+    // create a card (collect all sets)
     generateCard() {
       this._element = this._getTemplate();
       this._setEventListeners();
 
-      // Добавим данные
       const cardElementImage = this._element.querySelector('.elements__photo');
       const cardElementName = this._element.querySelector('.elements__name');
 
       cardElementName.textContent = this._name;
       cardElementImage.src = this._link;
-      cardElementImage.alt = `Фото ${this._title}`;
+      cardElementImage.alt = `Фото ${this._name}`;
 
       return this._element;
     }
