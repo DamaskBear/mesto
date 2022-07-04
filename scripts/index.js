@@ -113,10 +113,6 @@ function showFullscreenHandler(name, link) {
 function createCard(cardData) {
    return (new Card(cardData, '#card-template')).generateCard();
 }
-//render
-function renderCard(cardItem, parent) {
-    parent.prepend(cardItem);
-}
 
 //render of getting example Card
 function renderCard(cardItem, parent) {
