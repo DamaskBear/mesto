@@ -6,12 +6,10 @@ const popups = document.querySelectorAll('.popup');
 // edits
 const editButton = document.querySelector('.profile__edit-button');
 const popupEdit = document.querySelector('.popup_type_edit-form');
-//const editForm = popupEdit.querySelector('.popup__form_type_edit');
 const profileName = document.querySelector('.profile__name');
 const userName = popupEdit.querySelector('.popup__input_name');
 const userJob = popupEdit.querySelector('.popup__input_job');
 const profileAbout = document.querySelector('.profile__about');
-const popupCloseEdit = popupEdit.querySelector('.popup__close-button');
 const formElement = document.querySelector('.popup__form_type-edit');
 
 //add cards
@@ -21,11 +19,9 @@ const addButton = document.querySelector('.profile__add-button');
 const cardFormAdd = popupAddCard.querySelector('.popup__form_type_add-card');
 const inputPlaceName = popupAddCard.querySelector('.popup__input_place-name');
 const inputPlaceLink = popupAddCard.querySelector('.popup__input_place-link');
-//const popupCloseAdd = popupAddCard.querySelector('.popup__close-button');
 
 //fullscreen
 const popupFullscreen = document.querySelector('.popup_type_fullscreen-photo');
-//const popupCloseFullscreen = popupFullscreen.querySelector('.popup__close-button');
 const fullscreenPhoto = popupFullscreen.querySelector('.popup__fullscreen-photo');
 const fullscreenCaption = popupFullscreen.querySelector('.popup__fullscreen-caption');
 
