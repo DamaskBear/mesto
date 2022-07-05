@@ -76,10 +76,9 @@ export class FormValidator {
 
     //function for reseting mistakes in forms
     removeInputErrors() {
-        const inputList = Array.from(this._form.querySelectorAll(this._inputSelector));
-        this._toggleButtonState(inputList);
+        this._toggleButtonState(this._inputList);
 
-        inputList.forEach((inputElement) => {
+        this._inputList.forEach((inputElement) => {
         this._hideInputError(inputElement);
         });
     };

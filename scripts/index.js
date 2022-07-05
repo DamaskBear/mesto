@@ -62,7 +62,6 @@ function openPopup(popup) {
     popup.classList.add('popup_opened');
     document.addEventListener('keydown', closePopupEsc);
     document.addEventListener('mousedown',closePopupOverlay);
-    cardFormAdd.reset();
 }
 
 //close popup
@@ -132,8 +131,9 @@ formElement.addEventListener('submit', submitFormHandler);
 editButton.addEventListener('click', editFormPopupHandler);
 
 addButton.addEventListener('click', () => {
-openPopup(popupAddCard);
-formAddCardValidator.removeInputErrors();
+    cardFormAdd.reset();
+    formAddCardValidator.removeInputErrors();
+    openPopup(popupAddCard);
 });
 
 cardFormAdd.addEventListener('submit', createUserCardHandler);
