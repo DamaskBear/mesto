@@ -1,10 +1,9 @@
-  import {showFullscreenHandler} from "./index.js"; 
-  // 
   export class Card {
-    constructor(data, cardSelector) {
+    constructor(data, cardSelector, handleCardClick) {
       this._name = data.name;
       this._link = data.link;
       this._cardSelector = cardSelector;
+      this._handleCardClick = handleCardClick;
     }
 
 // take markup frm HTML-file and clone element 
@@ -31,7 +30,7 @@
     _setEventListeners() {
       this._element.querySelector(".elements__pic-bin").addEventListener("click", this._deleteCardHandler);
       this._element.querySelector(".elements__like-button").addEventListener("click", this._likeCardHandler);
-      this._element.querySelector(".elements__photo").addEventListener("click", () => { showFullscreenHandler(this._name, this._link) });
+      this._element.querySelector(".elements__photo").addEventListener("click", () => { this._handleCardClick(this._name, this._link) });
     }
 
     // create a card (collect all sets)

@@ -2,11 +2,11 @@ import { Card } from "./Card.js";
 import { initialCards } from "./initialCards.js";
 import { FormValidator } from "./FormValidation.js";
 
+const popups = document.querySelectorAll('.popup');
 // edits
 const editButton = document.querySelector('.profile__edit-button');
-// const editPopup = document.querySelector('.popup__type_edit');
 const popupEdit = document.querySelector('.popup_type_edit-form');
-const editForm = popupEdit.querySelector('.popup__form_type_edit');
+//const editForm = popupEdit.querySelector('.popup__form_type_edit');
 const profileName = document.querySelector('.profile__name');
 const userName = popupEdit.querySelector('.popup__input_name');
 const userJob = popupEdit.querySelector('.popup__input_job');
@@ -15,18 +15,17 @@ const popupCloseEdit = popupEdit.querySelector('.popup__close-button');
 const formElement = document.querySelector('.popup__form_type-edit');
 
 //add cards
-// const cardTemplate = document.querySelector(".card-template");
 const cardsList = document.querySelector('.elements__card'); 
 const popupAddCard = document.querySelector('.popup_type_add-form');
 const addButton = document.querySelector('.profile__add-button');
 const cardFormAdd = popupAddCard.querySelector('.popup__form_type_add-card');
 const inputPlaceName = popupAddCard.querySelector('.popup__input_place-name');
 const inputPlaceLink = popupAddCard.querySelector('.popup__input_place-link');
-const popupCloseAdd = popupAddCard.querySelector('.popup__close-button');
+//const popupCloseAdd = popupAddCard.querySelector('.popup__close-button');
 
 //fullscreen
 const popupFullscreen = document.querySelector('.popup_type_fullscreen-photo');
-const popupCloseFullscreen = popupFullscreen.querySelector('.popup__close-button');
+//const popupCloseFullscreen = popupFullscreen.querySelector('.popup__close-button');
 const fullscreenPhoto = popupFullscreen.querySelector('.popup__fullscreen-photo');
 const fullscreenCaption = popupFullscreen.querySelector('.popup__fullscreen-caption');
 
@@ -35,8 +34,6 @@ const nameInput = formElement.querySelector('.popup__input_name');
 const jobInput = formElement.querySelector('.popup__input_job');
 const name = document.querySelector('.profile__name');
 const job = document.querySelector('.profile__about');
-
-const formValidationList = Array.from(document.querySelectorAll('.popup__form'));
 
 //validation selectors
 const validationConfig = {
@@ -69,9 +66,7 @@ function openPopup(popup) {
     popup.classList.add('popup_opened');
     document.addEventListener('keydown', closePopupEsc);
     document.addEventListener('mousedown',closePopupOverlay);
-
-    formEditProfileValidator.removeInputErrors();
-    formAddCardValidator.removeInputErrors();
+    cardFormAdd.reset();
 }
 
 //close popup
@@ -86,6 +81,8 @@ function editFormPopupHandler() {
     userName.value = profileName.textContent;
     userJob.value = profileAbout.textContent;
     openPopup(popupEdit);
+
+    formEditProfileValidator.removeInputErrors();
 }
 
 // old code frm 4th sprint
@@ -101,7 +98,7 @@ function submitFormHandler (evt) {
 } 
 
 //fullscreen function
-function showFullscreenHandler(name, link) {
+function handleCardClick(name, link) {
     fullscreenPhoto.src = link;
     fullscreenCaption.textContent = name;
     fullscreenPhoto.alt = `Фото: ${name}`;
@@ -111,7 +108,7 @@ function showFullscreenHandler(name, link) {
 
 // to add cards frm JS
 function createCard(cardData) {
-   return (new Card(cardData, '#card-template')).generateCard();
+   return (new Card(cardData, '#card-template', handleCardClick)).generateCard();
 }
 
 //render of getting example Card
@@ -130,7 +127,6 @@ function createUserCardHandler(evt) {
 
     const card = createCard(newCard);
     renderCard(card, cardsList);
-    cardFormAdd.reset();
     closePopup(popupAddCard);
 };
 
@@ -139,25 +135,22 @@ formElement.addEventListener('submit', submitFormHandler);
 
 editButton.addEventListener('click', editFormPopupHandler);
 
-addButton.addEventListener('click', () => openPopup(popupAddCard));
+addButton.addEventListener('click', () => {
+openPopup(popupAddCard);
+formAddCardValidator.removeInputErrors();
+});
 
 cardFormAdd.addEventListener('submit', createUserCardHandler);
 
-// to close popup windows
-popupCloseEdit.addEventListener('click', () => {
-    closePopup(popupEdit);
-    formEditProfileValidator.removeInputErrors();
+// close all popups with one button
+popups.forEach((popup) => {
+    popup.addEventListener('click', (evt) => {
+        if(evt.target.classList.contains('popup__close-button')) {
+            closePopup(popup);
+        }
+    });
 });
 
-popupCloseAdd.addEventListener('click', () => {
-    cardFormAdd.reset();
-    closePopup(popupAddCard);
-    formAddCardValidator.removeInputErrors();
-});
-
-popupCloseFullscreen.addEventListener('click', () => {
-    closePopup(popupFullscreen);
-});
 
 // create cards frm js-file
 initialCards.forEach(item => {
@@ -165,12 +158,9 @@ initialCards.forEach(item => {
     renderCard(card, cardsList);
   });
 
-const formEditProfile = document.querySelector(".popup_type_edit-form");
-const formEditProfileValidator = new FormValidator(validationConfig, formEditProfile);
+// set validation on input-forms
+const formEditProfileValidator = new FormValidator(validationConfig, popupEdit);
 formEditProfileValidator.enableValidation();
 
-const formAddCard = document.querySelector(".popup_type_add-form");
-const formAddCardValidator = new FormValidator(validationConfig, formAddCard);
+const formAddCardValidator = new FormValidator(validationConfig, popupAddCard);
 formAddCardValidator.enableValidation();
-
-export {showFullscreenHandler};
