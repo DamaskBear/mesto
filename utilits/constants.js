@@ -26,7 +26,7 @@ export const initialCards = [
   ];
 
   //validation selectors
-const validationConfig = {
+export const validationConfig = {
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__button',
@@ -34,3 +34,11 @@ const validationConfig = {
   inputErrorClass: 'popup__input_type_error',
   errorClass: 'popup_error_visible'
 };
+
+// edits
+export const editButton = document.querySelector('.profile__edit-button');
+export const popupEdit = document.querySelector('.popup_type_edit-form');
+
+//add cards
+export const popupAddCard = document.querySelector('.popup_type_add-form');
+export const addButton = document.querySelector('.profile__add-button');
