@@ -5,14 +5,14 @@ export default class UserInfo {
     }
 
     getUserInfo() {
-        this.data = {};
-        this.data['user-name'] = this._userName.textContent;
-        this.data['user-job'] = this._userJob.textContent;
-        return this.data;
+        this.userData = {};
+        this.userData['user-name'] = this._userName.textContent;
+        this.userData['user-job'] = this._userJob.textContent;
+        return this.userData;
     }
 
-    setUserInfo(data) {
-        this._userName.textContent = data['user-name'];
-        this._userJob.textContent = data['user-job'];
+    setUserInfo(userData) {
+        this._userName.textContent = userData['user-name'];
+        this._userJob.textContent = userData['user-job'];
     }
 }

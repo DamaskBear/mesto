@@ -24,7 +24,7 @@ function handleCardClick(name, link) {
 }
 
 // handler for edit profile (open popup, reset, submit)
-function editFormPopupHandler() {
+function handleEditFormPopup() {
     const userInfo = userData.getUserInfo();
     popupEditForm.setInputsValues(userInfo);
     popupEditForm.openPopup();
@@ -79,7 +79,7 @@ const popupEditForm = new PopupWithForm('.popup_type_edit-form', (data) => {
 });
 
 popupEditForm.setEventListeners();
-editButton.addEventListener('click', editFormPopupHandler);
+editButton.addEventListener('click', handleEditFormPopup);
 
 //popup with user add-form card
 const popupAddForm = new PopupWithForm ('.popup_type_add-form', (data) => {
