@@ -1,4 +1,4 @@
-//import './index.css';
+import './index.css';
 
 import Card  from '../components/Card.js'
 import FormValidator  from '../components/FormValidation.js';
@@ -14,7 +14,7 @@ import {
     popupEdit,
     popupAddCard,
     addButton
- } from '../utilits/constants.js';
+ } from '../../utilits/constants.js';
 
 //fullscreen function 
 function handleCardClick(name, link) { 
