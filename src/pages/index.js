@@ -8,6 +8,7 @@ import Section from '../components/Section.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import UserInfo from '../components/UserInfo.js';
+import Api from '../components/Api.js';
 
 import { 
     initialCards,
@@ -17,6 +18,26 @@ import {
     popupAddCard,
     addButton
  } from '../utilits/constants.js';
+
+ //log api
+ const api = new Api({
+    url: 'https://mesto.nomoreparties.co/v1/cohort-46',
+    headers: {
+        authorization: '9543ec0e-d98d-48a1-9899-998ec00e05e5',
+        'Content-type': 'application/json'
+    }
+ })
+
+Promise.all([api.getUserInfo(), api.getInitialCards()])
+.then(([userInfo, cards]) => {
+    userId = userInfo._id;
+    userData.setUserInfo(userInfo);
+    cardPhotos.addItem(cards);
+})
+.catch((err) => console.log(err))
+.finally(() => {})
+
+let userId;
 
 //fullscreen function 
 function handleCardClick(name, link) { 
