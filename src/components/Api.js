@@ -18,7 +18,7 @@ export default class Api {
           })
           .then(this._checkResponse);
         }
-        
+
     getInitialCards() {
         return fetch(`${this._url}/cards`, {
             method: 'GET',
@@ -27,7 +27,7 @@ export default class Api {
         .then(this._checkResponse);
     }
 
-    changeUserInfo({ name, position }) {
+    updateUserInfo({ name, position }) {
         return fetch(`${this._url}/users/me`, {
           method: "PATCH",
           headers: this._headers,
