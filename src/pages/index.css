@@ -57,3 +57,5 @@
 @import url(../blocks/popup/__title/popup__title.css);
 
 @import url(../blocks/elements/__like-count/elements__like-count.css);
+
+@import url(../blocks/profile/__edit-avatar-button/profile__edit-avatar-button.css);
