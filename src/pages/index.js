@@ -17,7 +17,8 @@ import {
     editButton,
     popupEdit,
     popupAddCard,
-    addButton
+    addButton,
+    updateAvatar
  } from '../utilits/constants.js';
 
  //log api
@@ -25,7 +26,7 @@ import {
     url: 'https://mesto.nomoreparties.co/v1/cohort-46',
     headers: {
         authorization: '9543ec0e-d98d-48a1-9899-998ec00e05e5',
-        'Content-type': 'application/json'
+        'Content-Type': 'application/json'
     }
  })
 
@@ -35,12 +36,33 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
 .then(([userInfo, cards]) => {
     userId = userInfo._id;
     userData.setUserInfo(userInfo);
+    userData.setUserAvatar(userInfo);
     cardPhotos.addItem(cards);
 })
-.catch((err) => console.log(err))
-.finally(() => {})
+.catch((err) => {
+    console.log(err);
+})
 
+// creation of cards frm constants   DONE
+const cardPhotos = new Section(
+    {
+        items: [],
+        renderer: (data) => {
+            const newCard = createCard(data);
+            cardPhotos.addItem(newCard);
+        },
+    },
+    '.elements__card'
+);
 
+cardPhotos.renderItems();
+
+//   DONE!!!!!!!!!!
+const userData = new UserInfo({
+    userName: '.profile__name',
+    userJob: '.profile__about',
+    userAvatar: '.profile__avatar'
+});
 
 // //fullscreen function 
 // function handleCardClick(name, link) { 
@@ -56,12 +78,7 @@ function handleEditFormPopup() {
 }
 
 
-//   DONE!!!!!!!!!!
-const userData = new UserInfo({
-    userName: '.profile__name',
-    userJob: '.profile__about',
-    userAvatar: '.profile__avatar'
-});
+
 
 // to add cards frm JS
 const createCard = (data) => {
@@ -126,19 +143,8 @@ formEditProfileValidator.enableValidation();
 const formAddCardValidator = new FormValidator(validationConfig, popupAddCard);
 formAddCardValidator.enableValidation();
 
-// creation of cards frm constants   DONE
-const cardPhotos = new Section(
-    {
-        items: [],
-        renderer: (data) => {
-            const newCard = createCard(data);
-            cardPhotos.addItem(newCard);
-        },
-    },
-    '.elements__card'
-);
-
-cardPhotos.renderItems();
+const formAvatarValidator = new FormValidator(validationConfig, updateAvatar);
+formAvatarValidator.enableValidation();
 
 // popup fullscreen photo
 const popupFullscreenPhoto = new PopupWithImage ('.popup_type_fullscreen-photo');

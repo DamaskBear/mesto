@@ -1,5 +1,5 @@
   export default class Card {
-    constructor(data, userId, cardSelector, handleCardClick, handleLikeCard) {
+    constructor({data, userId, handleCardClick, handleLikeCard, handleDeleteClick}, cardSelector) {
       this._name = data.name;
       this._link = data.link;
       this._likes = data.likes;
@@ -8,6 +8,7 @@
       this._userId = userId;
       this._cardSelector = cardSelector;
       this._handleCardClick = handleCardClick;
+      this._handleDeleteClick = handleDeleteClick;
       this._handleLikeCard = handleLikeCard;
     }
 
@@ -27,6 +28,12 @@
       this._element = null;
   }
 
+    _hideDeleteButton() {
+      if (this._ownerId !== this._userId) {
+          this._btnDelete.remove();
+      }
+  }
+
     // //like-function
     // likeCardHandler(evt) {
     //   evt.target.classList.toggle("elements__like-button_active");
@@ -37,8 +44,9 @@
       this._element = this._getTemplate();
 
       this._cardElementImage = this._element.querySelector('.elements__photo');
-      this._btnLike - this._element.querySelector('.elements__like-button');
+      this._btnLike = this._element.querySelector('.elements__like-button');
       this._likesCount = this._element.querySelector('.elements__like-count');
+      this._btnDelete = this._element.querySelector('.elements__pic-bin');
       
       this._setEventListeners();
 
@@ -50,13 +58,14 @@
 
       this._checkOwnLike();
 
+      this._hideDeleteButton();
+
       return this._element;
     }
 
     // set listeners for delete, like, pic clicks
     _setEventListeners() {
-      this._element.querySelector(".elements__pic-bin").addEventListener("click", this.deleteCardHandler);
-      this._element.querySelector(".elements__like-button").addEventListener("click", this.likeCardHandler);
+      this._btnDelete.addEventListener("click", this.deleteCardHandler);
       this._cardElementImage.addEventListener("click", () => { this._handleCardClick(this._name, this._link) });
       this._btnLike.addEventListener('click', () => { this._handleLikeCard() });
     }
