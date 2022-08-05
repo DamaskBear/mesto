@@ -32,35 +32,28 @@ import {
 
  let userId = null;
 
-Promise.all([api.getUserInfo(), api.getInitialCards()])
-.then(([userInfo, cards]) => {
-    userId = userInfo._id;
-    userData.setUserInfo(userInfo);
-    userData.setUserAvatar(userInfo);
-    cardPhotos.addItem(cards);
-})
-.catch((err) => {
-    console.log(err);
-})
+
 
 // creation of cards frm constants   DONE
 const cardPhotos = new Section(
     {
         items: [],
-        renderer: (data) => {
-            const newCard = createCard(data);
+        renderer: (items) => {
+            const newCard = createCard(items);
             cardPhotos.addItem(newCard);
         },
     },
     '.elements__card'
 );
 
-cardPhotos.renderItems();
+
+
+
 
 //   DONE!!!!!!!!!!
 const userData = new UserInfo({
-    userName: '.profile__name',
-    userJob: '.profile__about',
+    name: '.profile__name',
+    about: '.profile__about',
     userAvatar: '.profile__avatar'
 });
 
@@ -157,6 +150,7 @@ const popupEditForm = new PopupWithForm('.popup_type_edit-form', {
         api.updateUserInfo(data)
             .then((res) => {
                 userData.setUserInfo(res);
+                console.log('priv');
                 popupEditForm.closePopup();
             })
             .catch((err) => {
@@ -208,3 +202,20 @@ const popupDeleteCard = new PopupWithConfirm('.popup_type_delete-card', {
 });
 
 popupDeleteCard.setEventListeners();
+
+Promise.all([api.getUserInfo(), api.getInitialCards()])
+.then(([userInfo, items]) => {
+    userId = userInfo._id;
+    
+    userData.setUserInfo(userInfo);
+    console.log('priv', userInfo);
+    userData.setUserAvatar(userInfo);
+
+    //cards.reverse();
+    // cardPhotos.addItem(cards);
+    //cardPhotos.renderItems(cards);
+    cardPhotos.renderItems(items);
+})
+.catch((err) => {
+    console.log(err);
+})
