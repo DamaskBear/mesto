@@ -18,7 +18,8 @@ import {
     popupEdit,
     popupAddCard,
     addButton,
-    updateAvatar
+    updateAvatar,
+    avatarButton
  } from '../utilits/constants.js';
 
  //log api
@@ -32,9 +33,7 @@ import {
 
  let userId = null;
 
-
-
-// creation of cards frm constants   DONE
+// creation of cards frm constants
 const cardPhotos = new Section(
     {
         items: [],
@@ -46,11 +45,7 @@ const cardPhotos = new Section(
     '.elements__card'
 );
 
-
-
-
-
-//   DONE!!!!!!!!!!
+// userINFO
 const userData = new UserInfo({
     name: '.profile__name',
     about: '.profile__about',
@@ -63,14 +58,14 @@ const userData = new UserInfo({
 // }
 
 // handler for edit profile (open popup, reset, submit)
-function handleEditFormPopup() {
-    const userInfo = userData.getUserInfo();
-    popupEditForm.setInputsValues(userInfo);
-    popupEditForm.openPopup();
-    formEditProfileValidator.removeInputErrors();
-}
+// function handleEditFormPopup() {
+//     const userInfo = userData.getUserInfo();
+//     popupEditForm.setInputsValues(userInfo);
+//     popupEditForm.openPopup();
+//     formEditProfileValidator.removeInputErrors();
+// }
 
-// to add cards frm JS
+// to add cards
 const createCard = (data) => {
     const card = new Card({
         data, userId,
@@ -121,10 +116,10 @@ return card.generateCard();
    
 
 // creation of new card with user data
-function createUserCardHandler() {
-    formAddCardValidator.removeInputErrors();
-    popupAddForm.openPopup();
-};
+// function createUserCardHandler() {
+//     formAddCardValidator.removeInputErrors();
+//     popupAddForm.openPopup();
+// };
 
 // set validation on input-forms
 const formEditProfileValidator = new FormValidator(validationConfig, popupEdit);
@@ -140,14 +135,13 @@ formAvatarValidator.enableValidation();
 const popupFullscreenPhoto = new PopupWithImage ('.popup_type_fullscreen-photo');
 popupFullscreenPhoto.setEventListeners();
 
-//popup with user profile     (!!!!!done!!!!!)
+//popup with user profile
 const popupEditForm = new PopupWithForm('.popup_type_edit-form', {
     submitFormHandler: (data) => {
         popupEditForm.renderLoading(true);
         api.updateUserInfo(data)
             .then((res) => {
                 userData.setUserInfo(res);
-                console.log('priv');
                 popupEditForm.closePopup();
             })
             .catch((err) => {
@@ -160,7 +154,12 @@ const popupEditForm = new PopupWithForm('.popup_type_edit-form', {
     });
 
 popupEditForm.setEventListeners();
-editButton.addEventListener('click', handleEditFormPopup);
+editButton.addEventListener('click', () => {
+    const userInfo = userData.getUserInfo();
+    popupEditForm.setInputsValues(userInfo);
+    popupEditForm.openPopup();
+    formEditProfileValidator.removeInputErrors();
+});
 
 //popup with user add-form card
 const popupAddForm = new PopupWithForm ('.popup_type_add-form',  {
@@ -183,7 +182,36 @@ const popupAddForm = new PopupWithForm ('.popup_type_add-form',  {
 });
 
 popupAddForm.setEventListeners();
-addButton.addEventListener('click', createUserCardHandler);
+addButton.addEventListener('click', () => {
+    formAddCardValidator.removeInputErrors();
+    popupAddForm.openPopup();
+});
+
+
+//popup with avatar changing form
+const popupSetAvatar = new PopupWithForm ('.popup_type_avatar-form', {
+    submitFormHandler: (data) => {
+        popupSetAvatar.renderLoading(true);
+        api.changeUserAvatar(data)
+            .then((res) => {
+                userData.setUserAvatar(res);
+                popupSetAvatar.closePopup();
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+            .finally(() => {
+                popupSetAvatar.renderLoading(false);
+            })
+    }
+});
+
+popupSetAvatar.setEventListeners();
+avatarButton.addEventListener('click', () => {
+    popupSetAvatar.openPopup();
+
+});
+
 
 //deletion approvement of card
 const popupDeleteCard = new PopupWithConfirm('.popup_type_delete-card', {
@@ -200,6 +228,7 @@ const popupDeleteCard = new PopupWithConfirm('.popup_type_delete-card', {
 
 popupDeleteCard.setEventListeners();
 
+
 Promise.all([api.getUserInfo(), api.getInitialCards()])
 .then(([userInfo, items]) => {
     userId = userInfo._id;
@@ -208,11 +237,11 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
     
     userData.setUserAvatar(userInfo);
 
-    //items.reverse();
+    
     // cardPhotos.addItem(cards);
     //cardPhotos.renderItems(cards);
     cardPhotos.renderItems(items.reverse());
 })
 .catch((err) => {
     console.log(err);
-})
+});
