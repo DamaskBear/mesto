@@ -19,7 +19,6 @@ export default class UserInfo {
     }
 
     setUserAvatar(url) {
-        console.log(url, 'suda');
         this._userAvatar.src = url.avatar;
         
     }

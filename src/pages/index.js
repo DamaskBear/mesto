@@ -70,9 +70,6 @@ function handleEditFormPopup() {
     formEditProfileValidator.removeInputErrors();
 }
 
-
-
-
 // to add cards frm JS
 const createCard = (data) => {
     const card = new Card({
@@ -145,7 +142,7 @@ popupFullscreenPhoto.setEventListeners();
 
 //popup with user profile     (!!!!!done!!!!!)
 const popupEditForm = new PopupWithForm('.popup_type_edit-form', {
-    handleSubmitForm: (data) => {
+    submitFormHandler: (data) => {
         popupEditForm.renderLoading(true);
         api.updateUserInfo(data)
             .then((res) => {
@@ -167,7 +164,7 @@ editButton.addEventListener('click', handleEditFormPopup);
 
 //popup with user add-form card
 const popupAddForm = new PopupWithForm ('.popup_type_add-form',  {
-    handleSubmitForm: (data) => {
+    submitFormHandler: (data) => {
         popupAddForm.renderLoading(true);
         api.addCard(data)
             .then((data) => {
@@ -208,13 +205,13 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
     userId = userInfo._id;
     
     userData.setUserInfo(userInfo);
-    console.log('priv', userInfo);
+    
     userData.setUserAvatar(userInfo);
 
-    //cards.reverse();
+    //items.reverse();
     // cardPhotos.addItem(cards);
     //cardPhotos.renderItems(cards);
-    cardPhotos.renderItems(items);
+    cardPhotos.renderItems(items.reverse());
 })
 .catch((err) => {
     console.log(err);
