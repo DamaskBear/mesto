@@ -9,7 +9,15 @@ export default class FormValidator {
         this._inputErrorClass = data.inputErrorClass;
         this._errorClass = data.errorClass;
     };
-        // function adds class with mistake
+
+    //function checks corrective input form 
+    _hasInvalidInput() {
+        return this._inputList.some((inputElement) => {
+            return !inputElement.validity.valid;
+        });
+    };
+
+    // function adds class with mistake
     _showInputError(inputElement) {
         inputElement.classList.add(this._inputErrorClass);
 
@@ -34,13 +42,6 @@ export default class FormValidator {
         } else {
         this._hideInputError(inputElement);
         }
-    };
-
-    //function checks corrective input form 
-    _hasInvalidInput() {
-        return this._inputList.some((inputElement) => {
-            return !inputElement.validity.valid;
-        });
     };
 
     // toggle button

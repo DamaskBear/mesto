@@ -34,11 +34,6 @@
       }
   }
 
-    // //like-function
-    // likeCardHandler(evt) {
-    //   evt.target.classList.toggle("elements__like-button_active");
-    // };
-
     // create a card (collect all sets)
     generateCard() {
       this._element = this._getTemplate();
@@ -65,30 +60,29 @@
 
     // set listeners for delete, like, pic clicks
     _setEventListeners() {
-      this._btnDelete.addEventListener("click", this.deleteCardHandler);
+      this._btnDelete.addEventListener("click", this._handleDeleteClick());
       this._cardElementImage.addEventListener("click", () => { this._handleCardClick(this._name, this._link) });
       this._btnLike.addEventListener('click', () => { this._handleLikeCard() });
     }
 
     isLiked() {
       return this._likes.find(user => user._id === this._userId);
-  }
+    }
 
-  _checkOwnLike() {
-      this.isLiked() ? this.addLike() : this.deleteLike();
-  }
+    _checkOwnLike() {
+        this.isLiked() ? this.addLike() : this.deleteLike();
+    }
 
-  setLike(data) {
-      this._likes = data;
-      this._likesCount.textContent = this._likes.length;
-  }
+    setLike(data) {
+        this._likes = data;
+        this._likesCount.textContent = this._likes.length;
+    }
 
-  addLike = () => {
-      this._btnLike.classList.add('element__like-button_active');
-  }
+    addLike = () => {
+        this._btnLike.classList.add('elements__like-button_active');
+    }
 
-  deleteLike = () => {
-      this._btnLike.classList.remove('element__like-button_active');
-  }
-
+    deleteLike = () => {
+        this._btnLike.classList.remove('elements__like-button_active');
+    }
   }

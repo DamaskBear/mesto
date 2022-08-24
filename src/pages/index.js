@@ -12,21 +12,22 @@ import PopupWithConfirm from '../components/PopupWithConfirm.js';
 import Api from '../components/Api.js';
 
 import { 
-    initialCards,
     validationConfig,
     editButton,
     popupEdit,
     popupAddCard,
     addButton,
     updateAvatar,
-    avatarButton
+    avatarButton,
+    inputEdit,
+    inputAbout
  } from '../utilits/constants.js';
 
  //log api
  const api = new Api({
-    url: 'https://mesto.nomoreparties.co/v1/cohort-46',
+    url: 'https://mesto.nomoreparties.co/v1/cohort-49',
     headers: {
-        authorization: '9543ec0e-d98d-48a1-9899-998ec00e05e5',
+        authorization: '59f6a1ae-0384-499e-aebb-f4cb2d0443c0',
         'Content-Type': 'application/json'
     }
  })
@@ -65,54 +66,7 @@ const userData = new UserInfo({
 //     formEditProfileValidator.removeInputErrors();
 // }
 
-// to add cards
-const createCard = (data) => {
-    const card = new Card({
-        data, userId,
-    handleCardClick: () => {
-        popupFullscreenPhoto.openPopup(data.name, data.link);
-    },
 
-    handleDeleteClick: () => {
-        popupDeleteCard.openPopup();
-        popupDeleteCard.handleSubmitConfirm(() => {
-            api.deleteCard(card._id)
-                .then(() => {
-                    card.deleteCardHandler();
-                    popupDeleteCard.closePopup();
-                })
-                .catch((err) => {
-                    console.log(err);
-                })
-        })
-    },
-
-    handleLikeCard: () => {
-        if (card.isLiked()) {
-            api.deleteLike(card._id)
-                .then((data) => {
-                    card.deleteLike();
-                    card.setLike(data.likes);
-                })
-                .catch((err) => {
-                    console.log(err);
-                })
-
-        } else {
-            api.addLike(card._id)
-                .then((data) => {
-                    card.addLike();
-                    card.setLike(data.likes);
-                })
-                .catch((err) => {
-                    console.log(err);
-                })
-        }
-    }
-    },
-    '.card-template');
-return card.generateCard();
-}
    
 
 // creation of new card with user data
@@ -153,10 +107,18 @@ const popupEditForm = new PopupWithForm('.popup_type_edit-form', {
     }
     });
 
+// fill inputs of edit
+function editProfile() {
+    const userInput = userData.getUserInfo();
+    inputEdit.value = userInput.userName;
+    inputAbout.value = userInput.userInfo;
+}
+
 popupEditForm.setEventListeners();
 editButton.addEventListener('click', () => {
-    const userInfo = userData.getUserInfo();
-    popupEditForm.setInputsValues(userInfo);
+    editProfile();
+    // const userInfo = userData.getUserInfo();
+    // popupEditForm.setInputsValues(userInfo);
     popupEditForm.openPopup();
     formEditProfileValidator.removeInputErrors();
 });
@@ -209,7 +171,7 @@ const popupSetAvatar = new PopupWithForm ('.popup_type_avatar-form', {
 popupSetAvatar.setEventListeners();
 avatarButton.addEventListener('click', () => {
     popupSetAvatar.openPopup();
-
+    formAvatarValidator.removeInputErrors();
 });
 
 
@@ -237,11 +199,57 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
     
     userData.setUserAvatar(userInfo);
 
-    
-    // cardPhotos.addItem(cards);
-    //cardPhotos.renderItems(cards);
     cardPhotos.renderItems(items.reverse());
 })
 .catch((err) => {
     console.log(err);
 });
+
+// to add cards
+const createCard = (data) => {
+    const card = new Card({
+        data, userId,
+    handleCardClick: () => {
+        popupFullscreenPhoto.openPopup(data.name, data.link);
+    },
+
+    handleDeleteClick: () => {
+        popupDeleteCard.openPopup();
+        popupDeleteCard.handleSubmitConfirm(() => {
+            api.deleteCard(card._id)
+                .then(() => {
+                    card.deleteCardHandler();
+                    popupDeleteCard.closePopup();
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
+        })
+    },
+
+    handleLikeCard: () => {
+        if (card.isLiked()) {
+            api.deleteLike(card._id)
+                .then((data) => {
+                    card.deleteLike();
+                    card.setLike(data.likes);
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
+
+        } else {
+            api.addLike(card._id)
+                .then((data) => {
+                    card.addLike();
+                    card.setLike(data.likes);
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
+        }
+    }
+    },
+    '.card-template');
+return card.generateCard();
+}

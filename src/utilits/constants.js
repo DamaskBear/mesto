@@ -11,6 +11,8 @@ export const validationConfig = {
 // edits
 export const editButton = document.querySelector('.profile__edit-button');
 export const popupEdit = document.querySelector('.popup_type_edit-form');
+export const inputEdit = document.querySelector('.popup__input_name');
+export const inputAbout = document.querySelector('.popup__input_job');
 
 //add cards
 export const popupAddCard = document.querySelector('.popup_type_add-form');
