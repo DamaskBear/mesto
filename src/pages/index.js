@@ -53,28 +53,6 @@ const userData = new UserInfo({
     userAvatar: '.profile__avatar'
 });
 
-// //fullscreen function 
-// function handleCardClick(name, link) { 
-//     popupFullscreenPhoto.openPopup(name, link)
-// }
-
-// handler for edit profile (open popup, reset, submit)
-// function handleEditFormPopup() {
-//     const userInfo = userData.getUserInfo();
-//     popupEditForm.setInputsValues(userInfo);
-//     popupEditForm.openPopup();
-//     formEditProfileValidator.removeInputErrors();
-// }
-
-
-   
-
-// creation of new card with user data
-// function createUserCardHandler() {
-//     formAddCardValidator.removeInputErrors();
-//     popupAddForm.openPopup();
-// };
-
 // set validation on input-forms
 const formEditProfileValidator = new FormValidator(validationConfig, popupEdit);
 formEditProfileValidator.enableValidation();
@@ -117,8 +95,6 @@ function editProfile() {
 popupEditForm.setEventListeners();
 editButton.addEventListener('click', () => {
     editProfile();
-    // const userInfo = userData.getUserInfo();
-    // popupEditForm.setInputsValues(userInfo);
     popupEditForm.openPopup();
     formEditProfileValidator.removeInputErrors();
 });
@@ -190,7 +166,7 @@ const popupDeleteCard = new PopupWithConfirm('.popup_type_delete-card', {
 
 popupDeleteCard.setEventListeners();
 
-
+// promise
 Promise.all([api.getUserInfo(), api.getInitialCards()])
 .then(([userInfo, items]) => {
     userId = userInfo._id;

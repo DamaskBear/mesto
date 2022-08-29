@@ -60,7 +60,7 @@
 
     // set listeners for delete, like, pic clicks
     _setEventListeners() {
-      this._btnDelete.addEventListener("click", this._handleDeleteClick());
+      this._btnDelete.addEventListener("click", () => {this._handleDeleteClick()});
       this._cardElementImage.addEventListener("click", () => { this._handleCardClick(this._name, this._link) });
       this._btnLike.addEventListener('click', () => { this._handleLikeCard() });
     }
